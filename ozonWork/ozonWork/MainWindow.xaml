@@ -1,0 +1,204 @@
+﻿<!-- ==========================================================================
+     ГЛАВНОЕ ОКНО ПРИЛОЖЕНИЯ (MainWindow)
+     Тема приложения — "Озон" (интернет-магазин), сделано по образцу
+     обычного WPF-приложения, максимально просто.
+     x:Class — связывает этот XAML-файл с C#-классом MainWindow
+     xmlns — пространства имен (стандартные для WPF)
+     Title — заголовок окна в панели задач
+     Height/Width — начальный размер окна в пикселях
+     WindowStartupLocation="CenterScreen" — окно откроется по центру экрана
+     Background — цвет фона всего окна (светлый серо-голубой)
+========================================================================== -->
+<Window x:Class="ozonWork.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ozon пре-альфа" Height="500" Width="850"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F4F8">
+
+    <!-- ГЛАВНАЯ СЕТКА (Grid) — контейнер, который делит окно на строки и столбцы -->
+    <Grid>
+        <!-- Определяем СТОЛБЦЫ главной сетки. Width="*" — займи всё доступное место -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Определяем СТРОКИ главной сетки:
+             Auto — высота по содержимому (шапка и подвал)
+             *    — растягивается на всё оставшееся место (основная часть) -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 0: Верхняя шапка -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 1: Поиск товаров -->
+            <RowDefinition Height="*"/>
+            <!-- Строка 2: Основная часть (меню + карточки товаров) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка 3: Нижняя панель с Exit -->
+        </Grid.RowDefinitions>
+
+        <!-- ======================================================================
+             1. ВЕРХНЯЯ ШАПКА
+             Border — рамка с фоном. Grid.Row="0" — лежит в первой строке.
+             Background="#005BFF" — фирменный синий цвет Ozon.
+             Padding — внутренние отступы (15 по бокам, 10 сверху/снизу).
+             Внутри — Grid из 2 колонок: слева название, справа корзина со счётчиком.
+        ======================================================================= -->
+        <Border Grid.Row="0" Background="#005BFF" Padding="15,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Ozon пре-альфа"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+                <!-- FontSize — размер шрифта
+                     FontWeight="Bold" — жирный текст
+                     Foreground — цвет текста (белый, хорошо читается на синем)
+                     HorizontalAlignment="Center" — центрируем текст по горизонтали -->
+
+                <!-- Иконка-кнопка корзины со счётчиком товаров -->
+                <Button Grid.Column="1"
+                        x:Name="CartBtn"
+                        Content="Корзина"
+                        Padding="10,5"
+                        Background="#FBBF24"
+                        Foreground="#1E293B"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Click="CartBtn_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- ======================================================================
+             2. СТРОКА ПОИСКА (Grid.Row="1")
+             TextBox — поле для ввода текста поиска
+             Button — кнопка "Найти"
+        ======================================================================= -->
+        <Border Grid.Row="1" Background="White" Padding="15,10" BorderBrush="#CBD5E1" BorderThickness="0,0,0,1">
+            <DockPanel>
+                <Button DockPanel.Dock="Right"
+                        Content="Найти"
+                        Width="90"
+                        Margin="8,0,0,0"
+                        Background="#005BFF"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="SemiBold"
+                        Click="SearchBtn_Click"/>
+                <TextBox x:Name="SearchBox"
+                         VerticalContentAlignment="Center"
+                         Padding="8,4"
+                         FontSize="14"
+                         BorderBrush="#CBD5E1"/>
+            </DockPanel>
+        </Border>
+
+        <!-- ======================================================================
+             3. ОСНОВНАЯ ЧАСТЬ (Grid.Row="2" — третья строка)
+             Вложенный Grid, который делит область на 2 столбца:
+             слева — меню (260px), справа — карточки товаров (растягивается)
+        ======================================================================= -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <!-- Фиксированная ширина меню -->
+                <ColumnDefinition Width="*"/>
+                <!-- Таблица занимает остаток -->
+            </Grid.ColumnDefinitions>
+
+            <!-- 2.1. ЛЕВОЕ БОКОВОЕ МЕНЮ
+                 Background="#E8EEF5" — нежный голубовато-серый фон
+                 Padding="10" — отступы -->
+            <Border Grid.Column="0" Background="#E8EEF5" Padding="10">
+                <StackPanel>
+                    <!-- Заголовок меню -->
+                    <TextBlock Text="Меню"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#1E293B"
+                               Margin="0,0,0,10"/>
+
+                    <!-- Кнопка "Товары" — акцентная (синяя) -->
+                    <Button Content=" Товары"
+                            Height="42" Margin="0,0,0,8" FontSize="14"
+                            Background="#005BFF" Foreground="White"
+                            BorderThickness="0" FontWeight="SemiBold"
+                            Click="Button_Click"/>
+
+                    <!-- Кнопка "Заказы" — белая с тонкой рамкой -->
+                    <Button Content=" Заказы"
+                            Height="42" Margin="0,0,0,8" FontSize="14"
+                            Background="White" Foreground="#1E293B"
+                            BorderBrush="#CBD5E1" BorderThickness="1"
+                            Click="Button_Click_1"/>
+
+                    <!-- Кнопка "Корзина" -->
+                    <Button Content=" Корзина"
+                            Height="42" Margin="0,0,0,8" FontSize="14"
+                            Background="White" Foreground="#1E293B"
+                            BorderBrush="#CBD5E1" BorderThickness="1"
+                            Click="Button_Click"/>
+
+                    <!-- Кнопка "Профиль" -->
+                    <Button Content=" Профиль"
+                            Height="42" Margin="0,0,0,8" FontSize="14"
+                            Background="White" Foreground="#1E293B"
+                            BorderBrush="#CBD5E1" BorderThickness="1"
+                            Click="Button_Click_1"/>
+
+                    <!-- Кнопка "Настройки" — с желтоватым акцентом -->
+                    <Button Content=" Настройки"
+                            Height="42" Margin="0,0,0,8" FontSize="14"
+                            Background="#FEF3C7" Foreground="#92400E"
+                            BorderThickness="0" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 2.2. ТАБЛИЦА (правая часть)
+                 DataGrid — элемент для отображения табличных данных
+                 x:Name="MyTable" — имя, по которому мы обращаемся из C#-кода -->
+            <Border Grid.Column="1" Margin="15">
+                <DataGrid x:Name="MyTable"
+                          Background="White"
+                          BorderThickness="1"
+                          BorderBrush="#CBD5E1"
+                          RowBackground="White"
+                          AlternatingRowBackground="#EAF1FF"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#E2E8F0"
+                          FontSize="13"/>
+                <!-- RowBackground — цвет обычных строк
+                     AlternatingRowBackground — цвет чётных строк (зебра)
+                     HeadersVisibility — показывать только заголовки колонок
+                     GridLinesVisibility — показывать только горизонтальные линии -->
+            </Border>
+        </Grid>
+
+        <!-- ======================================================================
+             3. НИЖНЯЯ ПАНЕЛЬ (Grid.Row="2" — третья строка)
+        ======================================================================= -->
+        <Border Grid.Row="2" Background="#E8EEF5" Padding="10">
+            <Button x:Name="ExitBtn"
+                    Content="Exit"
+                    Width="110" Height="36"
+                    HorizontalAlignment="Right"
+                    Click="ExitBtn_Click"
+                    Background="#EF4444"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    FontSize="13"
+                    BorderThickness="0"/>
+            <!-- HorizontalAlignment="Right" — прижимает кнопку к правому краю
+                 Background="#EF4444" — красный цвет (стандарт для кнопки выхода)
+                 Click="ExitBtn_Click" — при нажатии вызовется метод в C# -->
+        </Border>
+
+    </Grid>
+</Window>
