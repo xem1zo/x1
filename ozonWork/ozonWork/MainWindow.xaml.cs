@@ -1,24 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-
 
 namespace ozonWork
 {
-    // Простой класс "Товар" — описывает одну строку таблицы товаров.
-    // Обычные публичные свойства, чтобы DataGrid мог сам построить колонки.
+    // Класс товара
     public class Product
     {
         public string Name { get; set; }
@@ -36,42 +22,101 @@ namespace ozonWork
         {
             InitializeComponent();
 
-            // При открытии окна сразу показываем список товаров
+            // При запуске показываем товары
             ShowProducts();
         }
 
-        // Метод, который срабатывает при нажатии на кнопку Exit
+        // Кнопка выхода
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Закрывает текущее окно
-            this.Close();
+            Close();
         }
 
-        // Кнопка "Товары" — показывает список товаров в таблице
+        // Кнопка "Товары"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ShowProducts();
         }
 
-        // Кнопка "Заказы"/"Профиль" — пока просто заглушка
+        // Кнопка "Заказы / Профиль"
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Этот раздел ещё в разработке :)", "Ozon пре-альфа");
+            MessageBox.Show(
+                "Этот раздел ещё в разработке :)",
+                "Ozon пре-альфа",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
         }
 
-        // Простейший метод — создаёт список товаров и выводит его в таблицу
+        // Кнопка "Корзина"
+        private void CartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Корзина пока пуста.",
+                "Корзина",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
+        }
+
+        // Кнопка "Поиск"
+        private void SearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Функция поиска пока находится в разработке.",
+                "Поиск",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
+        }
+
+        // Вывод товаров в таблицу
         private void ShowProducts()
         {
             List<Product> products = new List<Product>
             {
-                new Product { Name = "Ноутбук Lenovo",   Category = "Электроника", Price = 45990, Quantity = 3 },
-                new Product { Name = "Кроссовки Nike",    Category = "Обувь",       Price = 6990,  Quantity = 12 },
-                new Product { Name = "Чайник Xiaomi",     Category = "Дом",         Price = 2490,  Quantity = 20 },
-                new Product { Name = "Книга \"C# для начинающих\"", Category = "Книги", Price = 890, Quantity = 50 },
-                new Product { Name = "Наушники JBL",      Category = "Электроника", Price = 3990,  Quantity = 8 },
+                new Product
+                {
+                    Name = "Ноутбук Lenovo",
+                    Category = "Электроника",
+                    Price = 45990,
+                    Quantity = 3
+                },
+
+                new Product
+                {
+                    Name = "Кроссовки Nike",
+                    Category = "Обувь",
+                    Price = 6990,
+                    Quantity = 12
+                },
+
+                new Product
+                {
+                    Name = "Чайник Xiaomi",
+                    Category = "Дом",
+                    Price = 2490,
+                    Quantity = 20
+                },
+
+                new Product
+                {
+                    Name = "Книга \"C# для начинающих\"",
+                    Category = "Книги",
+                    Price = 890,
+                    Quantity = 50
+                },
+
+                new Product
+                {
+                    Name = "Наушники JBL",
+                    Category = "Электроника",
+                    Price = 3990,
+                    Quantity = 8
+                }
             };
 
-            // ItemsSource — источник данных для таблицы (DataGrid сам построит колонки)
             MyTable.ItemsSource = products;
         }
     }
